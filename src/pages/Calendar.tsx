@@ -141,11 +141,6 @@ export default function Calendar() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button asChild variant="outline" size="lg">
-                <NavLink to="/app/posts/calendar-flow">
-                  Interactive View
-                </NavLink>
-              </Button>
               <Button asChild size="lg" className="btn-hero shadow-glow">
                 <NavLink to="/app/create">
                   <Plus className="w-5 h-5 mr-2" />
@@ -203,7 +198,7 @@ export default function Calendar() {
           <Tabs value={view}>
             {/* Week View */}
             <TabsContent value="week">
-              <div className="grid grid-cols-8 gap-3">
+              <div className="grid grid-cols-8 gap-4">
                 {/* Time Column */}
                 <div className="space-y-12 pt-16">
                   {Array.from({ length: 10 }, (_, i) => (
@@ -215,12 +210,12 @@ export default function Calendar() {
 
                 {/* Day Columns */}
                 {getWeekDays(currentDate).map((day, dayIndex) => (
-                  <div key={dayIndex} className="space-y-2">
+                  <div key={dayIndex} className="space-y-3">
                     {/* Premium Day Header */}
-                    <div className={`text-center p-3 rounded-xl transition-all ${
+                    <Card className={`text-center p-3 border-0 shadow-elegant transition-all ${
                       isToday(day) 
                         ? 'bg-gradient-primary text-white shadow-glow' 
-                        : 'bg-gradient-subtle border hover:shadow-sm'
+                        : 'bg-gradient-subtle hover:shadow-md'
                     }`}>
                       <div className="text-xs font-medium opacity-90">
                         {day.toLocaleDateString('en-US', { weekday: 'short' })}
@@ -228,7 +223,7 @@ export default function Calendar() {
                       <div className="text-lg font-bold">
                         {day.getDate()}
                       </div>
-                    </div>
+                    </Card>
 
                     {/* Premium Posts for this day */}
                     <div className="space-y-2 min-h-[320px] relative">
@@ -289,10 +284,10 @@ export default function Calendar() {
 
             {/* Month View */}
             <TabsContent value="month">
-              <div className="grid grid-cols-7 gap-2">
+              <div className="grid grid-cols-7 gap-4">
                 {/* Week Headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                  <div key={day} className="p-2 text-center text-sm font-medium text-muted-foreground">
+                  <div key={day} className="p-3 text-center text-sm font-medium text-muted-foreground">
                     {day}
                   </div>
                 ))}
@@ -301,9 +296,9 @@ export default function Calendar() {
                 {getMonthDays(currentDate).map((day, index) => (
                   <Card 
                     key={index} 
-                    className={`min-h-32 p-2 ${
+                    className={`min-h-32 p-3 border-0 shadow-elegant hover:shadow-glow transition-all cursor-pointer bg-gradient-subtle ${
                       !isCurrentMonth(day) ? 'opacity-50' : ''
-                    } ${isToday(day) ? 'ring-2 ring-primary' : ''} hover:shadow-md transition-shadow cursor-pointer`}
+                    } ${isToday(day) ? 'ring-2 ring-primary bg-gradient-primary/5' : ''}`}
                   >
                     <div className={`text-sm font-medium mb-2 ${
                       isToday(day) ? 'text-primary' : 'text-foreground'
@@ -315,13 +310,13 @@ export default function Calendar() {
                       {getPostsForDate(day).slice(0, 3).map((post) => (
                         <div 
                           key={post.id} 
-                          className="text-xs p-1 bg-primary/10 rounded truncate"
+                          className="text-xs p-1.5 bg-primary/10 rounded-md truncate border border-primary/20"
                         >
                           {post.scheduledTime || post.publishedTime} {post.title}
                         </div>
                       ))}
                       {getPostsForDate(day).length > 3 && (
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-muted-foreground font-medium">
                           +{getPostsForDate(day).length - 3} more
                         </div>
                       )}

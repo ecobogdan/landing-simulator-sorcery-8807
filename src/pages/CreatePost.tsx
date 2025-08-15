@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
+import { AccountSelector } from "@/components/AccountSelector"
+import type { PostTarget } from "@/types/accounts"
 
 const socialPlatforms = [
   { id: 'instagram', name: 'Instagram', icon: '📷', connected: true, charLimit: 2200 },
@@ -24,6 +26,7 @@ export default function CreatePost() {
   
   const [postType, setPostType] = useState(defaultType)
   const [selectedPlatforms, setSelectedPlatforms] = useState(['instagram', 'linkedin'])
+  const [selectedAccounts, setSelectedAccounts] = useState<PostTarget[]>([])
   const [caption, setCaption] = useState("")
   const [scheduledFor, setScheduledFor] = useState("")
   const [postNow, setPostNow] = useState(true)
@@ -249,6 +252,15 @@ export default function CreatePost() {
               ))}
             </CardContent>
           </Card>
+
+          {/* Account Selection */}
+          {selectedPlatforms.length > 0 && (
+            <AccountSelector
+              selectedAccounts={selectedAccounts}
+              onAccountsChange={setSelectedAccounts}
+              selectedPlatforms={selectedPlatforms}
+            />
+          )}
 
           {/* Scheduling */}
           <Card className="card-elevated shadow-elegant border-0">

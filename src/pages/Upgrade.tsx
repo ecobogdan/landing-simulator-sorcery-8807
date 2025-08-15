@@ -45,53 +45,39 @@ const Upgrade = () => {
 
   const plans = [
     {
-      id: "starter",
-      name: "Starter", 
-      description: "Your current plan",
-      monthlyPrice: 0,
-      yearlyPrice: 0,
-      current: true,
-      features: [
-        "1 social account",
-        "10 posts per month",
-        "Basic analytics",
-        "Email support"
-      ]
-    },
-    {
       id: "pro",
       name: "Pro",
-      description: "Recommended upgrade",
+      description: "Perfect for creators & small teams",
       monthlyPrice: 29,
       yearlyPrice: 290,
       popular: true,
-      upgrade: true,
+      trial: "15-day free trial",
       features: [
-        "5 social accounts",
-        "Unlimited posts",
-        "Advanced analytics",
+        "Up to 5 social accounts per platform",
+        "Unlimited posts & scheduling",
+        "Advanced analytics & insights",
         "Team collaboration (up to 5 members)",
         "Priority email support",
-        "Custom posting times",
-        "Bulk upload",
-        "Content calendar"
+        "AI-powered content suggestions",
+        "Bulk upload & CSV import",
+        "Content calendar with optimization"
       ]
     },
     {
       id: "business", 
       name: "Business",
-      description: "For growing teams",
+      description: "For growing teams & agencies",
       monthlyPrice: 99,
       yearlyPrice: 990,
-      upgrade: true,
+      trial: "15-day free trial",
       features: [
         "Unlimited social accounts",
-        "Unlimited posts",
-        "Advanced analytics & reports",
+        "Unlimited posts & automation",
+        "Advanced analytics & white-label reports",
         "Unlimited team members",
         "24/7 priority support",
-        "White-label reports",
-        "Custom integrations",
+        "Custom branding & workflows",
+        "API access & integrations",
         "Dedicated account manager"
       ]
     }
