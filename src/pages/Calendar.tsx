@@ -211,16 +211,16 @@ export default function Calendar() {
                 {/* Day Columns */}
                 {getWeekDays(currentDate).map((day, dayIndex) => (
                   <div key={dayIndex} className="space-y-3">
-                    {/* Premium Day Header */}
-                    <Card className={`text-center p-3 border-0 shadow-elegant transition-all ${
+                    {/* Premium Day Header - Consistent with Month View */}
+                    <Card className={`text-center p-4 border-0 premium-card transition-all ${
                       isToday(day) 
                         ? 'bg-gradient-primary text-white shadow-glow' 
                         : 'bg-gradient-subtle hover:shadow-md'
                     }`}>
-                      <div className="text-xs font-medium opacity-90">
+                      <div className="text-sm font-semibold opacity-90 mb-1">
                         {day.toLocaleDateString('en-US', { weekday: 'short' })}
                       </div>
-                      <div className="text-lg font-bold">
+                      <div className="text-xl font-bold">
                         {day.getDate()}
                       </div>
                     </Card>
@@ -285,22 +285,24 @@ export default function Calendar() {
             {/* Month View */}
             <TabsContent value="month">
               <div className="grid grid-cols-7 gap-4">
-                {/* Week Headers */}
+                {/* Week Headers - Premium Style */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                  <div key={day} className="p-3 text-center text-sm font-medium text-muted-foreground">
-                    {day}
-                  </div>
+                  <Card key={day} className="p-4 text-center border-0 bg-gradient-subtle">
+                    <div className="text-sm font-semibold text-muted-foreground">
+                      {day}
+                    </div>
+                  </Card>
                 ))}
 
-                {/* Month Days */}
+                {/* Month Days - Enhanced Premium Style */}
                 {getMonthDays(currentDate).map((day, index) => (
                   <Card 
                     key={index} 
-                    className={`min-h-32 p-3 border-0 shadow-elegant hover:shadow-glow transition-all cursor-pointer bg-gradient-subtle ${
+                    className={`min-h-32 p-4 border-0 premium-card cursor-pointer bg-gradient-subtle ${
                       !isCurrentMonth(day) ? 'opacity-50' : ''
                     } ${isToday(day) ? 'ring-2 ring-primary bg-gradient-primary/5' : ''}`}
                   >
-                    <div className={`text-sm font-medium mb-2 ${
+                    <div className={`text-base font-bold mb-3 ${
                       isToday(day) ? 'text-primary' : 'text-foreground'
                     }`}>
                       {day.getDate()}
