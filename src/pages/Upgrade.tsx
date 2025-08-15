@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import { Check, ArrowRight, Crown, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
@@ -13,31 +12,24 @@ const Upgrade = () => {
   const [isYearly, setIsYearly] = useState(false);
   const { toast } = useToast();
 
-  // Mock current user plan
-  const currentPlan = {
-    id: "starter",
-    name: "Starter",
-    features: ["1 social account", "10 posts per month", "Basic analytics"]
-  };
-
   const handleSelectPlan = async (planId: string, planName: string) => {
     try {
       toast({
         title: "Processing upgrade...",
-        description: `Upgrading to ${planName} plan`,
+        description: `Starting your 15-day free trial for ${planName}`,
       });
       
       // Mock API call - in production this would create a Stripe Checkout Session
       setTimeout(() => {
         toast({
-          title: "Mock upgrade initiated",
-          description: "In production, this would redirect to Stripe Checkout",
+          title: "Trial started!",
+          description: "Welcome to your 15-day free trial. No credit card required.",
         });
       }, 1000);
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to process upgrade",
+        description: "Failed to start trial",
         variant: "destructive",
       });
     }
@@ -94,41 +86,18 @@ const Upgrade = () => {
               <div className="flex items-center gap-3 mb-2">
                 <Crown className="w-8 h-8 text-primary" />
                 <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                  Upgrade Your Plan
+                  Choose Your Plan
                 </h1>
               </div>
               <p className="text-lg text-muted-foreground">
-                You're currently on the <strong>{currentPlan.name}</strong> plan. 
-                Unlock premium features and accelerate your growth.
+                Start with a 15-day free trial. No credit card required.
+                Upgrade your social media game with premium features.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Current Plan Status */}
-      <ElevatedCard className="max-w-md mx-auto border-0 shadow-elegant bg-gradient-subtle">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">Current Plan</CardTitle>
-            <Badge variant="secondary" className="bg-primary/10 text-primary">Active</Badge>
-          </div>
-          <CardDescription>
-            <strong>{currentPlan.name}</strong> - Free forever
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            {currentPlan.features.map((feature, i) => (
-              <li key={i} className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-success" />
-                {feature}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </ElevatedCard>
-      
       {/* Billing Toggle */}
       <motion.div 
         className="flex items-center justify-center gap-4"
@@ -154,7 +123,7 @@ const Upgrade = () => {
       </motion.div>
 
       {/* Premium Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {plans.map((plan, index) => (
           <motion.div
             key={plan.id}
@@ -164,19 +133,12 @@ const Upgrade = () => {
           >
             <ElevatedCard 
               className={`relative p-6 border-0 shadow-elegant transition-all duration-300 ${
-                plan.current 
-                  ? 'opacity-60 ring-1 ring-muted bg-gradient-subtle' 
-                  : plan.popular 
-                    ? 'ring-2 ring-primary scale-105 shadow-glow bg-gradient-primary/5' 
-                    : 'hover:scale-102 bg-gradient-subtle hover:shadow-glow'
+                plan.popular 
+                  ? 'ring-2 ring-primary scale-105 shadow-glow bg-gradient-primary/5' 
+                  : 'hover:scale-102 bg-gradient-subtle hover:shadow-glow'
               }`}
             >
-              {plan.current && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-muted text-muted-foreground">
-                  Current Plan
-                </Badge>
-              )}
-              {plan.popular && !plan.current && (
+              {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary shadow-glow">
                   <Zap className="w-3 h-3 mr-1" />
                   Most Popular
@@ -186,57 +148,42 @@ const Upgrade = () => {
               <div className="text-center mb-6">
                 <h3 className="text-xl font-semibold mb-2 flex items-center justify-center gap-2">
                   {plan.name}
-                  {plan.upgrade && <ArrowRight className="w-5 h-5 text-primary" />}
+                  <ArrowRight className="w-5 h-5 text-primary" />
                 </h3>
                 <p className="text-muted-foreground mb-4">{plan.description}</p>
                 <div className="text-4xl font-bold">
                   <AnimatedCounter 
-                    value={plan.monthlyPrice === 0 ? 0 : (isYearly ? plan.yearlyPrice : plan.monthlyPrice)} 
+                    value={isYearly ? plan.yearlyPrice : plan.monthlyPrice} 
                     prefix="$" 
                     className="text-4xl font-bold text-primary"
                   />
-                  {plan.monthlyPrice === 0 ? (
-                    <span className="text-lg text-muted-foreground ml-1">forever</span>
-                  ) : (
-                    <span className="text-lg text-muted-foreground">/{isYearly ? 'year' : 'month'}</span>
-                  )}
+                  <span className="text-lg text-muted-foreground">/{isYearly ? 'year' : 'month'}</span>
                 </div>
-                {isYearly && plan.monthlyPrice > 0 && (
+                {isYearly && (
                   <p className="text-sm text-green-600 mt-1">
                     Save ${(plan.monthlyPrice * 12 - plan.yearlyPrice).toFixed(0)} per year
                   </p>
                 )}
+                <p className="text-sm text-primary font-medium mt-2">{plan.trial}</p>
               </div>
-              
+                
               <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <Check className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                      plan.current ? 'text-muted-foreground' : 'text-success'
-                    }`} />
-                    <span className={`text-sm ${
-                      plan.current ? 'text-muted-foreground' : ''
-                    }`}>
-                      {feature}
-                    </span>
+                    <Check className="w-4 h-4 mt-0.5 flex-shrink-0 text-success" />
+                    <span className="text-sm">{feature}</span>
                   </li>
                 ))}
               </ul>
 
-              {plan.current ? (
-                <Button className="w-full" variant="outline" disabled>
-                  Current Plan
-                </Button>
-              ) : (
-                <Button 
-                  className={`w-full premium-hover ${plan.popular ? 'btn-hero shadow-glow' : ''}`}
-                  variant={plan.popular ? "default" : "outline"}
-                  onClick={() => handleSelectPlan(plan.id, plan.name)}
-                >
-                  Upgrade to {plan.name}
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              )}
+              <Button 
+                className={`w-full premium-hover ${plan.popular ? 'btn-hero shadow-glow' : ''}`}
+                variant={plan.popular ? "default" : "outline"}
+                onClick={() => handleSelectPlan(plan.id, plan.name)}
+              >
+                Start {plan.name} Trial
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
             </ElevatedCard>
           </motion.div>
         ))}

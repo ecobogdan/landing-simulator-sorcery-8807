@@ -128,17 +128,17 @@ const Landing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Badge className="mb-6 px-4 py-2 text-sm premium-hover">
-              <Star className="w-4 h-4 mr-2" />
-              Trusted by 10,000+ content creators
-            </Badge>
-            <h1 className="text-hero font-bold mb-6 bg-gradient-to-b from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
-              Schedule Posts.<br />
-              Save Time.<br />
-              <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Grow Faster.
-              </span>
-            </h1>
+              <Badge className="mb-6 px-4 py-2 text-sm premium-hover">
+                <Star className="w-4 h-4 mr-2" />
+                Trusted by 10,000+ content creators
+              </Badge>
+              <h1 className="text-hero font-bold mb-6 bg-gradient-to-b from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
+                Schedule Posts.<br />
+                Save Time.<br />
+                <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                  Grow Faster.
+                </span>
+              </h1>
             <motion.p 
               className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
               initial={{ opacity: 0 }}
@@ -156,7 +156,7 @@ const Landing = () => {
             >
               <Link to="/auth/signup">
                 <Button size="lg" className="btn-hero text-lg px-8 py-6 premium-hover">
-                  Start Free Trial <ArrowRight className="ml-2 w-5 h-5" />
+                  Start 15-Day Free Trial <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <Button size="lg" variant="outline" className="text-lg px-8 py-6 premium-hover" onClick={() => scrollToSection('features')}>
